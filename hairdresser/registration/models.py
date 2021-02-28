@@ -51,7 +51,7 @@ class Service(models.Model):
     """
     name = models.CharField(max_length=50)
     time = models.IntegerField()
-    price = models.DecimalField(decimal_places=2)
+    price = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
         return f'{self.name}'
@@ -67,13 +67,13 @@ class Visit(models.Model):
     """
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     salon = models.ForeignKey(Salon, on_delete=models.CASCADE)
-    service = models.ForeignKey(Service, on_delete=models.SET_NULL)
+    service = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL)
     start = models.DateTimeField()
     stop = models.DateTimeField()
     client_name = models.CharField(max_length=50)
     client_phone_number = models.CharField(max_length=9)
     discount = models.CharField(max_length=20)
-    price = models.DecimalField(decimal_places=2)
+    price = models.DecimalField(max_digits=5, decimal_places=2)
 
     class Meta:
         verbose_name = "Wizyta"

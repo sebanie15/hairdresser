@@ -33,7 +33,7 @@ class Service(models.Model):
     """
 
     name = models.CharField(max_length=50, verbose_name=_('Service name'))
-    time = models.DecimalField(max_digits=5, decimal_places=2, verbose_name=_('Executing time'))
+    time = models.TimeField(verbose_name=_('Executing time'))
     price = models.DecimalField(max_digits=5, decimal_places=2, verbose_name=_('Price'))
 
     def __str__(self):
@@ -51,7 +51,7 @@ class Visit(models.Model):
     """
     employee = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name=_('Employee'))
     salon = models.ForeignKey(Salon, on_delete=models.CASCADE, verbose_name=_('_Salon'))
-    service = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL, verbose_name=_('Service'))
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name=_('Service'))
     start = models.DateTimeField(verbose_name=_('From'))
     stop = models.DateTimeField(verbose_name=_('To'))
     client_name = models.CharField(max_length=50, verbose_name=_('Client name'))

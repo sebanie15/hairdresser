@@ -2,27 +2,6 @@ from django.db import models
 
 from django.utils.translation import gettext as _
 
-# Create your models here.
-
-
-class Employee(models.Model):
-    """
-    A class to represents employee model.
-    """
-
-    first_name = models.CharField(max_length=30, verbose_name=_('First name'))
-    last_name = models.CharField(max_length=30, verbose_name=_('Last name'))
-    email_address = models.EmailField(unique=True, verbose_name=_('email address'))
-    phone_number = models.CharField(max_length=12, verbose_name=_('phone number'))
-
-    def __str__(self):
-        return f'{self.first_name} {self.last_name}'
-
-    class Meta:
-
-        verbose_name = _('Employee')
-        verbose_name_plural = _('Employees')
-
 
 class Salon(models.Model):
     """
@@ -34,7 +13,8 @@ class Salon(models.Model):
     phone_number = models.CharField(max_length=12, verbose_name=_('Phone number'))
     open_from = models.TimeField(verbose_name=_('Open from'))
     open_to = models.TimeField(verbose_name=_('Open to'))
-    employees = models.ManyToManyField(Employee, verbose_name=_('Assigned employees'))
+    active = models.BooleanField(default=True, verbose_name=_('Is active'))
+    employees = models.ManyToManyField('auth.User', verbose_name=_('Assigned employees'))
 
     def __str__(self):
         return f'{self.name}'
@@ -45,28 +25,19 @@ class Salon(models.Model):
         verbose_name_plural = _('Salons')
 
 
-# class SalonEmployee(models.Model):
-#     """
-#     A class to represents employee and salon models relationships.
-#     """
-#     employee = models.ManyToManyField(Employee)
-#     salon = models.ManyToManyField(Salon)
-
-
 class Service(models.Model):
     """
     A class to represents service model.
     """
 
     name = models.CharField(max_length=50, verbose_name=_('Service name'))
-    time = models.DecimalField(max_digits=5, decimal_places=2, verbose_name=_('Executing time'))
+    service_length = models.IntegerField(default=30, verbose_name=_('Executing time'))
     price = models.DecimalField(max_digits=5, decimal_places=2, verbose_name=_('Price'))
 
     def __str__(self):
         return f'{self.name}'
 
     class Meta:
-
         verbose_name = _('Service')
         verbose_name_plural = _('Services')
 
@@ -75,17 +46,18 @@ class Visit(models.Model):
     """
     A class to represents visit model.
     """
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    salon = models.ForeignKey(Salon, on_delete=models.CASCADE)
-    service = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL)
-    start = models.DateTimeField()
-    stop = models.DateTimeField()
-    client_name = models.CharField(max_length=50)
-    client_phone_number = models.CharField(max_length=12)
+    employee = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name=_('Employee'))
+    salon = models.ForeignKey(Salon, on_delete=models.CASCADE, verbose_name=_('_Salon'))
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name=_('Service'))
+    start = models.DateTimeField(verbose_name=_('From'))
+    stop = models.DateTimeField(verbose_name=_('To'))
+    client_name = models.CharField(max_length=50, verbose_name=_('Client name'))
+    client_phone_number = models.CharField(max_length=12, verbose_name=_("Client's phone number"))
+    finished = models.BooleanField(default=False, verbose_name=_('Is finished'))
 
-    discount = models.CharField(max_length=20)
-    price = models.DecimalField(max_digits=5, decimal_places=2)
+    discount = models.DecimalField(max_length=5, decimal_places=2, blank=True, verbose_name=_('Discount'))
+    price = models.DecimalField(max_digits=5, decimal_places=2, verbose_name=_('Price'))
 
     class Meta:
-        verbose_name = "Wizyta"
-        verbose_name_plural = "Wizyty"
+        verbose_name = _('Visit')
+        verbose_name_plural = _('Visits')

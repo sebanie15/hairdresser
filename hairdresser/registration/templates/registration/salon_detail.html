@@ -1,5 +1,20 @@
+{% extends 'registration/base.html' %}
+{% block body %}
+{% if user.is_authenticated %}
+
 <h2>{{ salon.name }}</h2>
 Address: {{ salon.address }} <br>
 Phone number: {{ salon.phone_number }} <br>
 Opening hours: {{ salon.open_from }} - {{ salon.open_to }} <br>
-Employees: {{ salon.employees }}
+Employees:
+<ul>
+    {% for employee in employees %}
+    <li><a href="#">{{ employee.first_name }} {{ employee.last_name }}</a></li>
+    {% endfor %}
+</ul>
+
+{% else %}
+<h3>Sorry, you have to be logged in to see this page.</h3> <br>
+For any questions contact with your administrator.
+{% endif %}
+{% endblock body %}

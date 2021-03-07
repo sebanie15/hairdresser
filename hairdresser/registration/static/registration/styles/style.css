@@ -1,0 +1,127 @@
+
+html{
+    font-size: 16px;
+    font-family: 'Jura', sans-serif;
+}
+
+body{
+    background-image: url("{% static 'myToDoList/img/sidebar.png' %}");
+    background-repeat: repeat-y;
+    margin: 0%;
+    padding: 0%;
+}
+
+main{
+    flex-wrap: nowrap;
+}
+
+.main-content{
+    display: flex;
+}
+
+.link-menu{
+    width: 100%;
+    height: 2rem;
+    padding-top: 0.3rem;
+    display: flex;
+}
+
+.link-menu:hover{
+    background-color: rgb(252, 252, 252);
+
+}
+
+a:link, a:visited{
+    color: black;
+    text-decoration: none;
+}
+
+.link-menu:link:active, .link-menu:visited:active{
+    color: black;
+}
+
+.sidebar-menu-img{
+    /* margin-top: 0.2rem; */
+    margin-left: 15px;
+    margin: auto 15px auto 15px;
+}
+
+.sidebar{
+    background-color: rgb(243, 243, 243);
+    width: 390px;
+    padding-top: 0.5rem;
+    height: 100vh;
+    /* flex: 1; */
+}
+
+.topbar{
+    background-color: rgb(50, 112, 189);
+    width: 100vw;
+    height: 2.5rem;
+    padding: 0.2rem;
+    display: flex;
+}
+
+.topbar-title{
+    color: white;
+    font-weight: 900;
+    font-size: 1.5rem;
+    margin-left: 50px;
+    margin-top: auto;
+    margin-bottom: auto;
+    flex: 1;
+}
+
+.topbar-search{
+    width: 100%;
+    height: 100%;
+    flex: 1;
+}
+
+.topbar-search-input{
+    width: 100%;
+    background: lightblue;
+    margin-top: 3px;
+    /* margin-bottom: auto; */
+    height: 1.7rem;
+    border: 1px solid rgb(68, 123, 206);
+    border-radius: 3px;
+}
+
+.topbar-menu{
+    flex: 1;
+}
+
+.main-container{
+    text-align: auto;
+    /* border: 1px solid darkgray; */
+    /* border-radius: 5px; */
+    width: 100%;
+    /* flex: 1; */
+    padding: 1rem;
+}
+
+.task-item{
+    width: 100%;
+    height: 3rem;
+    padding-top: 0.3rem;
+    background-color: rgb(234, 240, 247);
+    display: flex;
+    border-bottom: 1px solid gray;
+    border-radius:4px;
+    margin-top: 5px
+}
+
+.task-item:hover{
+    background-color: rgb(216, 242, 250);
+}
+
+.task-item-img{
+    margin: auto 0;
+    margin-left: 15px;
+    width: 30px;
+}
+
+.center-verticaly{
+    margin: auto 0;
+}

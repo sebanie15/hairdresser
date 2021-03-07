@@ -1,27 +1,37 @@
 from django.db import models
 
+from django.contrib.auth.models import AbstractUser
+
 from django.utils.translation import gettext as _
 
 # Create your models here.
 
 
-class Employee(models.Model):
-    """
-    A class to represents employee model.
-    """
+# class User(AbstractUser):
+#     phone_number = models.CharField(verbose_name=_("Phone number"), max_length=50, null=True,
+#     blank=True)
 
-    first_name = models.CharField(max_length=30, verbose_name=_('First name'))
-    last_name = models.CharField(max_length=30, verbose_name=_('Last name'))
-    email_address = models.EmailField(unique=True, verbose_name=_('email address'))
-    phone_number = models.CharField(max_length=12, verbose_name=_('phone number'))
+#     class Meta(AbstractUser.Meta):
+#         swappable = 'AUTH_USER_MODEL'
 
-    def __str__(self):
-        return f'{self.first_name} {self.last_name}'
 
-    class Meta:
+# class Employee(models.Model):
+#     """
+#     A class to represents employee model.
+#     """
 
-        verbose_name = _('Employee')
-        verbose_name_plural = _('Employees')
+#     first_name = models.CharField(max_length=30, verbose_name=_('First name'))
+#     last_name = models.CharField(max_length=30, verbose_name=_('Last name'))
+#     email_address = models.EmailField(unique=True, verbose_name=_('email address'))
+#     phone_number = models.CharField(max_length=12, verbose_name=_('phone number'))
+
+#     def __str__(self):
+#         return f'{self.first_name} {self.last_name}'
+
+#     class Meta:
+
+#         verbose_name = _('Employee')
+#         verbose_name_plural = _('Employees')
 
 
 class Salon(models.Model):
@@ -34,7 +44,7 @@ class Salon(models.Model):
     phone_number = models.CharField(max_length=12, verbose_name=_('Phone number'))
     open_from = models.TimeField(verbose_name=_('Open from'))
     open_to = models.TimeField(verbose_name=_('Open to'))
-    employees = models.ManyToManyField(Employee, verbose_name=_('Assigned employees'))
+    employees = models.ManyToManyField('auth.User', verbose_name=_('Assigned employees'))
 
     def __str__(self):
         return f'{self.name}'
@@ -49,8 +59,8 @@ class Salon(models.Model):
 #     """
 #     A class to represents employee and salon models relationships.
 #     """
-#     employee = models.ManyToManyField(Employee)
-#     salon = models.ManyToManyField(Salon)
+#     employee = models.ForeignKey('auth.User', verbose_name=_("Pracownicy przydzieleni"), on_delete=models.CASCADE)
+#     salon = models.ForeignKey(Salon, verbose_name=_("Salony"), on_delete=models.CASCADE)
 
 
 class Service(models.Model):
@@ -75,7 +85,7 @@ class Visit(models.Model):
     """
     A class to represents visit model.
     """
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    employee = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     salon = models.ForeignKey(Salon, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, null=True, on_delete=models.SET_NULL)
     start = models.DateTimeField()

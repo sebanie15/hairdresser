@@ -1,15 +1,10 @@
 from django.contrib import admin
 
-from .models import Salon # , User
+
+from .models import Salon
+
 
 # Register your models here.
-
-
-# class EmployeeAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'first_name', 'last_name', 'email_address', 'phone_number')
-#     search_fields = ('first_name', 'last_name', 'email_address', 'phone_number')
-#     ordering = ('last_name', 'first_name')
-#     list_filter = ('first_name', 'last_name', 'email_address', 'phone_number')
 
 
 class SalonAdmin(admin.ModelAdmin):
@@ -20,6 +15,5 @@ class SalonAdmin(admin.ModelAdmin):
     fields = ('name', 'address', 'phone_number', 'open_from', 'open_to', )
 
 
-# admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(Salon, SalonAdmin)
 # admin.site.register(User)

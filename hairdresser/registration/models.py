@@ -34,9 +34,10 @@ class Service(models.Model):
     """
     A class to represents service model.
     """
+    SERVICE_LENGTHS = ((15, '15 min'), (30, '30 min'), (45, '45 min'), (60, '60 min'), (75, '75 min'), (90, '90 min'))
 
     name = models.CharField(max_length=50, verbose_name=_('Service name'))
-    service_length = models.IntegerField(default=30, verbose_name=_('Executing time'))
+    service_length = models.IntegerField(default=30, verbose_name=_('Executing time'), choices=SERVICE_LENGTHS,)
     price = models.DecimalField(max_digits=5, decimal_places=2, verbose_name=_('Price'))
 
     def __str__(self):

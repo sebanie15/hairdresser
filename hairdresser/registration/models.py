@@ -33,7 +33,7 @@ class Service(models.Model):
     """
 
     name = models.CharField(max_length=50, verbose_name=_('Service name'))
-    time = models.TimeField(verbose_name=_('Executing time'))
+    service_length = models.IntegerField(default=30, verbose_name=_('Executing time'))
     price = models.DecimalField(max_digits=5, decimal_places=2, verbose_name=_('Price'))
 
     def __str__(self):

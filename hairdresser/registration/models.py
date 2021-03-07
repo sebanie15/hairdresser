@@ -2,8 +2,6 @@ from django.db import models
 
 from django.utils.translation import gettext as _
 
-# Create your models here.
-
 
 class Salon(models.Model):
     """
@@ -40,7 +38,6 @@ class Service(models.Model):
         return f'{self.name}'
 
     class Meta:
-
         verbose_name = _('Service')
         verbose_name_plural = _('Services')
 

@@ -10,7 +10,7 @@ def hello(request):
     return render(request=request, template_name="registration/base.html", context={})
 
 
-def salon_list(request):
+  def salon_list(request):
     active_salons = Salon.objects.filter(active=True)
     inactive_salons = Salon.objects.filter(active=False)
     return render(request=request, template_name='registration/salon_list.html',

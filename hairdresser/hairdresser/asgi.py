@@ -1,5 +1,5 @@
 """
-ASGI config for hairdresser project.
+ASGI config for registration project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

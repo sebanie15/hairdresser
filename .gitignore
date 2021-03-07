@@ -128,6 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Sevret key
-.haidresser/secret_key
+# Secret key
+/hairdresser/hairdresser/secret_key.py
 
+# ignored migration catalog
+/hairdresser/registration/migrations/

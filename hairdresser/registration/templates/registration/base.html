@@ -1,1 +1,57 @@
-hello world
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Salon frryzur - rejestracja {% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap" rel="stylesheet">
+    <link href="{% static 'registration/styles/style.css' %}" rel="stylesheet" type="text/css">
+    {% block extraheader %}
+    {% endblock %}
+</head>
+
+<body>
+
+    {% comment %} górny sekcja - baner + nazwa strony + pole wyszukiwania {% endcomment %}
+    <div class="topbar">
+
+        <div class="topbar-title">
+            Centrum salonów fryzjerskich
+        </div>
+
+        <form action="" method="get" class="topbar-search">
+            {% csrf_token %}
+            <input type="text" class="topbar-search-input">
+
+        </form>
+
+        <div class="topbar_menu">
+            Main menu
+        </div>
+
+    </div>
+
+    {% comment %} zawartość strony {% endcomment %}
+    <section class="main-content">
+
+        {% comment %} lewe menu {% endcomment %}
+        <aside class="sidebar">
+            {% block sidebar %}
+                sidebar content
+            {% endblock %}
+        </aside>
+        {% comment %} główny obszar na stronie gdzie będzie umieszczony kalendarz {% endcomment %}
+        <main class="main-container">
+            {% block main_container %}
+                calendar content
+            {% endblock %}
+        </main>
+    </section>
+
+{% block body %}
+Tu jest testowy napis
+{% endblock %}
+
+</body>
+</html>

@@ -37,7 +37,7 @@ def get_free_time_list(
 
         # get first available term
         term_start, term_end = busy_terms.pop(0)
-        print('terms: ', term_start, term_end)
+        # print('terms: ', term_start, term_end)
 
         if term_start.day != free_time_start.day:
             result.append((free_time_start, datetime(year=free_time_start.year,
@@ -48,10 +48,10 @@ def get_free_time_list(
             free_time_start = datetime(year=term_start.year, month=term_start.month, day=term_start.day,
                                        hour=opening_time.hour, minute=opening_time.minute)
 
-            print(f' free_time_start from if: {free_time_start}')
+            # print(f' free_time_start from if: {free_time_start}')
 
         if term_start.day == free_time_start.day:
-            print('jestem w else')
+            # print('jestem w else')
 
             if free_time_start < term_start:
                 result.append((free_time_start, term_start))

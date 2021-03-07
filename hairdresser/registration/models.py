@@ -1,6 +1,9 @@
 from django.db import models
 
+from django.contrib.auth.models import AbstractUser
+
 from django.utils.translation import gettext as _
+
 
 
 class Salon(models.Model):
@@ -13,8 +16,10 @@ class Salon(models.Model):
     phone_number = models.CharField(max_length=12, verbose_name=_('Phone number'))
     open_from = models.TimeField(verbose_name=_('Open from'))
     open_to = models.TimeField(verbose_name=_('Open to'))
+
     active = models.BooleanField(default=True, verbose_name=_('Is active'))
     employees = models.ManyToManyField('auth.User', blank=True, verbose_name=_('Assigned employees'))
+
 
     def __str__(self):
         return f'{self.name}'
@@ -29,9 +34,10 @@ class Service(models.Model):
     """
     A class to represents service model.
     """
+    SERVICE_LENGTHS = ((15, '15 min'), (30, '30 min'), (45, '45 min'), (60, '60 min'), (75, '75 min'), (90, '90 min'))
 
     name = models.CharField(max_length=50, verbose_name=_('Service name'))
-    service_length = models.IntegerField(default=30, verbose_name=_('Executing time'))
+    service_length = models.IntegerField(default=30, verbose_name=_('Executing time'), choices=SERVICE_LENGTHS,)
     price = models.DecimalField(max_digits=5, decimal_places=2, verbose_name=_('Price'))
 
     def __str__(self):
@@ -46,6 +52,7 @@ class Visit(models.Model):
     """
     A class to represents visit model.
     """
+
     employee = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name=_('Employee'))
     salon = models.ForeignKey(Salon, on_delete=models.CASCADE, verbose_name=_('_Salon'))
     service = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name=_('Service'))

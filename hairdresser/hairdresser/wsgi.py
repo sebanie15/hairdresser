@@ -1,5 +1,5 @@
 """
-WSGI config for hairdresser project.
+WSGI config for registration project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

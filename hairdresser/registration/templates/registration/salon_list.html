@@ -1,0 +1,20 @@
+
+{% block body %}
+
+<div>
+    <ul>
+        {% for salon in active_salons %}
+        <li><a href="{% url 'salon_detail' salon.id %}">{{ salon }}</a></li>
+        {% endfor %}
+    </ul>
+
+    {% if perms.registration.staff_member_required %}
+    <ul>
+        {% for salon in inactive_salons %}
+        <li><a href="{% url 'salon_detail' salon.id %}">{{ salon }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+
+{% endblock body %}

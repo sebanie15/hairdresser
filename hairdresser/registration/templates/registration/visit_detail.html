@@ -1,0 +1,24 @@
+{% extends 'registration/base.html' %}
+{% block body %}
+{% if user.is_authenticated %}
+
+{{ visit.start|date:'Y-m-d H:i' }} - {{ end_time|date:'H:i' }} <br>
+Client's name: {{ visit.client_name }} <br>
+Client's phone number: {{ visit.client_phone_number }} <br>
+Service: {{ visit.service.name }} <br>
+Salon: {{ visit.salon.name }} <br>
+Employee:
+{% for person in employee %}
+<a href="#">{{ person.first_name }} {{ person.last_name }}</a> <br>
+{% endfor %}
+Price: {{ final_price }} <br>
+{% if visit.finished is True %}
+FINISHED
+{% endif %}
+
+
+{% else %}
+<h3>Sorry, you have to be logged in to see this page.</h3> <br>
+For any questions contact with your administrator.
+{% endif %}
+{% endblock body %}

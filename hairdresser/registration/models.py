@@ -1,31 +1,23 @@
 from django.db import models
-
-from django.contrib.auth.models import AbstractUser
-
 from django.utils.translation import gettext as _
-
 
 
 class Salon(models.Model):
     """
     A class to represents salon model.
     """
-
     name = models.CharField(max_length=50, verbose_name=_('Salon name'))
     address = models.CharField(max_length=50, verbose_name=_('Address'))
     phone_number = models.CharField(max_length=12, verbose_name=_('Phone number'))
     open_from = models.TimeField(verbose_name=_('Open from'))
     open_to = models.TimeField(verbose_name=_('Open to'))
-
     active = models.BooleanField(default=True, verbose_name=_('Is active'))
     employees = models.ManyToManyField('auth.User', blank=True, verbose_name=_('Assigned employees'))
-
 
     def __str__(self):
         return f'{self.name}'
 
     class Meta:
-
         verbose_name = _('Salon')
         verbose_name_plural = _('Salons')
 
@@ -52,9 +44,8 @@ class Visit(models.Model):
     """
     A class to represents visit model.
     """
-
     employee = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name=_('Employee'))
-    salon = models.ForeignKey(Salon, on_delete=models.CASCADE, verbose_name=_('_Salon'))
+    salon = models.ForeignKey(Salon, on_delete=models.CASCADE, verbose_name=_('Salon'))
     service = models.ForeignKey(Service, on_delete=models.CASCADE, verbose_name=_('Service'))
     start = models.DateTimeField(verbose_name=_('From'))
     stop = models.DateTimeField(verbose_name=_('To'))

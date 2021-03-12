@@ -8,10 +8,12 @@ from .models import Salon, Visit, Service
 # Create your views here.
 
 
-def hello(request):
+@login_required
+def base(request):
     return render(request=request, template_name="registration/base.html", context={})
 
 
+@login_required
 def salon_list(request):
     active_salons = Salon.objects.filter(active=True)
     inactive_salons = Salon.objects.filter(active=False)
@@ -19,6 +21,7 @@ def salon_list(request):
                   context={'active_salons': active_salons, 'inactive_salons': inactive_salons})
 
 
+@login_required
 def salon_detail(request, salon_id):
     employees = User.objects.filter(salon__id=salon_id)
     salon = get_object_or_404(Salon, id=salon_id)
@@ -26,6 +29,7 @@ def salon_detail(request, salon_id):
                   context={'salon': salon, 'employees': employees})
 
 
+@login_required
 def visit_detail(request, visit_id):
     employee = User.objects.filter(visit__id=visit_id)
     visit = get_object_or_404(Visit, id=visit_id)

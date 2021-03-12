@@ -1,6 +1,5 @@
 {% extends 'registration/base.html' %}
-{% block body %}
-{% if user.is_authenticated %}
+{% block main-container %}
 
 {{ visit.start|date:'Y-m-d H:i' }} - {{ end_time|date:'H:i' }} <br>
 Client's name: {{ visit.client_name }} <br>
@@ -16,9 +15,4 @@ Price: {{ final_price }} <br>
 FINISHED
 {% endif %}
 
-
-{% else %}
-<h3>Sorry, you have to be logged in to see this page.</h3> <br>
-For any questions contact with your administrator.
-{% endif %}
-{% endblock body %}
+{% endblock main-container %}

@@ -1,6 +1,5 @@
 {% extends 'registration/base.html' %}
-{% block body %}
-{% if user.is_authenticated %}
+{% block main-container %}
 
 <h2>{{ salon.name }}</h2>
 Address: {{ salon.address }} <br>
@@ -13,8 +12,4 @@ Employees:
     {% endfor %}
 </ul>
 
-{% else %}
-<h3>Sorry, you have to be logged in to see this page.</h3> <br>
-For any questions contact with your administrator.
-{% endif %}
-{% endblock body %}
+{% endblock main-container %}

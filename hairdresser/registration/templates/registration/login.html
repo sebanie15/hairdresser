@@ -1,0 +1,11 @@
+{% extends 'registration/base.html' %}
+{% block main_container %}
+    <h1>Log in</h1>
+    <form action="{% url 'login' %}" method="POST" novalidate>
+    <table>
+        {{ form }}
+        <tr><td><td><input type="submit" value="login" name="login"></td></tr>
+    </table>
+    {% csrf_token %}
+</form>
+{% endblock main_container %}

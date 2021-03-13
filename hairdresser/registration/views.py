@@ -1,16 +1,71 @@
 from datetime import timedelta
 
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
 
 from .models import Salon, Visit, Service
 # Create your views here.
 
 
+def login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            # log in the user
+            username = request.POST['username']
+            password = request.POST['password']
+            print(username, password)
+            user = authenticate(request, username=username, password=password)
+
+            print(f'{request.user} zalogowany')
+            if request.user.is_authenticated:
+                print(f'{request.user} się zalogował')
+            return redirect('calendar')
+
+        else:
+            print('nic z tego')
+    else:
+        form = AuthenticationForm()
+
+    return render(request=request, template_name="registration/login.html", context={'form': form})
+
+
+def logout_view(request):
+    logout(request)
+
+
 @login_required
-def base(request):
-    return render(request=request, template_name="registration/base.html", context={})
+def calendar_view(request):
+
+    terms = [['free', 1]]*44
+    print(terms)
+    ctx = {
+        'timeline': [],
+        'timetable': {
+            'monday': terms,
+            'tuesday': terms,
+            'wednesday': terms,
+            'thursday': terms,
+            'friday': terms},
+    }
+
+    return render(
+        request=request,
+        template_name='registration/calendar.html',
+        context=ctx,
+    )
+
+
+def create_visit(request):
+
+    return render(
+        request=request,
+        template_name='registration/create_visit.html',
+        context={},
+    )
 
 
 @login_required

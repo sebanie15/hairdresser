@@ -13,11 +13,15 @@
         </thead>
         <tbody>
         {% for salon in active_salons %}
+
         <tr>
+            <a href="">
             <th scope="row">{{ salon.id }}</th>
             <td><a href="{% url 'salon_detail' salon.id %}" class="text-dark" style="text-decoration: unset;">{{ salon.name }}</a></td>
             <td>{{ salon.address }}</td>
+                </a>
         </tr>
+
         {% endfor %}
         </tbody>
         <tfoot>
@@ -30,8 +34,6 @@
     </table> <hr>
 
 <div>
-
-
 
     {% if perms.registration.staff_member_required %}
         <h5 class="text-center bg-light mt-5">Closed salons</h5>

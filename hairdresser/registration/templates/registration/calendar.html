@@ -3,13 +3,20 @@
 {% block main_container %}
 
 <!--    <h1>{% translate 'Calendar' %}</h1>-->
+    <form action="" method="POST" novalidate>
+        <table>
+            <td>{{form}}</td>
+            <td><input type="submit" value={% translate 'Select' %}></td>
+        </table>
+        {% csrf_token %}
+    </form>
 
     <div>
         <div style="margin-bottom: 5px; width: 100%; align-content: center; border: lightgray 1px solid">
             <table width="100%">
                 <th>
                     <td style="width: 7rem; text-align: center"><a href="{% url 'calendar' %}">PREV WEEK</a></td>
-                    <td style="text-align: center">ZAKRES DAT</td>
+                    <td style="text-align: center">{{ date_from}} - {{ date_to }}</td>
                     <td style="width: 7rem; text-align: center"><a href="{% url 'calendar' %}">NEXT WEEK</a></td>
                 </th>
             </table>
@@ -29,19 +36,8 @@
                 </tr>
                 <tr>
 <!--                    hours-->
-                    <td style="width: 5rem;">
-                            <div class="calendar-time">7:00</div>
-                            <div class="calendar-time">:15</div>
-                            <div class="calendar-time">:30</div>
-                            <div class="calendar-time">:45</div>
-                            <div class="calendar-time">8:00</div>
-                            <div class="calendar-time">:15</div>
-                            <div class="calendar-time">:30</div>
-                            <div class="calendar-time">:45</div>
-                            <div class="calendar-time">9:00</div>
-                            <div class="calendar-time">:15</div>
-                            <div class="calendar-time">:30</div>
-                            <div class="calendar-time">:45</div>
+                    <td  style="width: 5rem;">
+
                             <div class="calendar-time">10:00</div>
                             <div class="calendar-time">:15</div>
                             <div class="calendar-time">:30</div>
@@ -79,11 +75,15 @@
 
                     {% for week_day in timetable.values %}
                         <td class="table-column">
-                        {% for state, length in week_day %}
+                        {% for state, length, hour in week_day %}
                             {% if state == 'free' %}
-                                 <a href="{% url 'create_visit' %}"><div class="calendar-cell-free"></div></a>
+                                 <a href="{% url 'create_visit' %}">
+                                     <div class="calendar-cell-free" style="height: {{length}}px">{{hour}}</div>
+                                 </a>
                             {% elif state == 'busy' %}
-                                <a href=""></a>
+                                <a href="{% url 'create_visit' %}">
+                                    <div class="calendar-cell-busy" style="height: {{length}}px">{{hour}} {{length}}</div>
+                                </a>
                             {% endif %}
                         {% endfor %}
                         </td>

@@ -1,50 +1,62 @@
-from datetime import timedelta
+from datetime import timedelta, datetime, date, time
+from pytz import UTC as utc
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 
+from .forms import SalonForm
 from .models import Salon, Visit, Service
 # Create your views here.
 
-
-# def login(request):
-#     if request.method == 'POST':
-#         form = AuthenticationForm(data=request.POST)
-#         if form.is_valid():
-#             # log in the user
-#             username = request.POST['username']
-#             password = request.POST['password']
-#             print(username, password)
-#             user = authenticate(request, username=username, password=password)
-#
-#             print(f'{request.user} zalogowany')
-#             if request.user.is_authenticated:
-#                 print(f'{request.user} się zalogował')
-#             return redirect('calendar')
-#
-#         else:
-#             print('nic z tego')
-#     else:
-#         form = AuthenticationForm()
-#
-#     return render(request=request, template_name="registration/login.html", context={'form': form})
-
-
-# def logout_view(request):
-#     logout(request)
-
-
 @login_required
-def calendar_view(request):
+def calendar_view(request, salon_id=None):
+    """
 
-    terms = [['free', 1]]*44
-    print(terms)
+    """
+
+    if not salon_id:
+        salon_id = 1
+
+    try:
+        salons = Salon.objects.get(id=salon_id)
+    except ObjectDoesNotExist:
+        raise Http404
+
+    if request.method == "POST":
+        form = SalonForm(request.POST)
+
+        if form.is_valid():
+            salon_pk = form.get_salon_pk()
+
+            return HttpResponseRedirect(f'/registration/calendar/{salon_pk}')
+    else:
+        salon_pk = salon_id
+
+    actual_date = date.today()
+    actual_week_day = actual_date.weekday()
+    date_from = actual_date - timedelta(days=actual_week_day)
+    date_to = date_from + timedelta(days=actual_week_day-1)
+
+    active_salon = Salon.objects.get(pk=salon_pk)
+    time_open = active_salon.open_from
+    time_close = active_salon.open_to
+
+    # make data
+    visits = Visit.objects.filter(pk=salon_pk)
+
+    terms = [['free', 1]] * 44
+
     ctx = {
+        'form': SalonForm(),
         'timeline': [],
+        'date_from': date_from,
+        'date_to': date_to,
         'timetable': {
             'monday': terms,
             'tuesday': terms,
@@ -52,6 +64,51 @@ def calendar_view(request):
             'thursday': terms,
             'friday': terms},
     }
+
+    def subtract_two_times(t1: time, t2: time) -> int:
+
+        return (datetime.combine(date(1, 1, 1), t2) - datetime.combine(date(1, 1, 1), t1)).seconds // 60
+
+    def inc_time(old_time, delta_hour=0, delta_minute=0):
+        temp_date = datetime.combine(date(1, 1, 1), old_time) + timedelta(hours=delta_hour, minutes=delta_minute)
+        return time(temp_date.hour, temp_date.minute)
+
+    WEEK_DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']
+
+    pointed_date = date_from
+
+    while pointed_date <= date_to:
+        week_day = pointed_date.weekday()
+
+        result = []
+        visits = Visit.objects.filter(salon=salon_pk, start__gte=datetime.combine(pointed_date, time_open),
+                                      start__lte=datetime.combine(pointed_date, time_close)).order_by('start')
+
+        actual_hour = time_open
+        i = 0
+        while subtract_two_times(actual_hour, time_close) > 0:
+            if i < len(visits):
+                visit_start = visits[i].start
+                visit_stop = visits[i].stop
+
+                if subtract_two_times(actual_hour, time(visit_start.hour, visit_start.minute)) > 0:
+                    delta_time = 15
+                    result.append(['free', 20, actual_hour])
+                else:
+                    visit_length = subtract_two_times(time(visit_start.hour, visit_start.minute),
+                                                      time(visit_stop.hour, visit_stop.minute))
+                    result.append(['busy', visit_length + 5 * visit_length // 12, actual_hour])
+                    i += 1
+                    delta_time = subtract_two_times(time(visit_start.hour, visit_start.minute),
+                                                    time(visit_stop.hour, visit_stop.minute))
+            else:
+                result.append(['free', 20, actual_hour])
+                delta_time = 15
+
+            actual_hour = inc_time(old_time=actual_hour, delta_minute=delta_time)
+
+        ctx['timetable'].update({WEEK_DAYS[week_day]:result})
+        pointed_date = pointed_date + timedelta(days=1)
 
     return render(
         request=request,
@@ -95,7 +152,6 @@ def visit_detail(request, visit_id):
     return render(request=request, template_name='registration/visit_detail.html',
                   context={'employee': employee, 'visit': visit, 'end_time': end_time, 'final_price': final_price})
 
-
 @login_required
 def user_profile(request, username):
     user = User.objects.get(username=username)
@@ -126,3 +182,4 @@ def password_success(request):
 @login_required
 def home_page(request):
     return render(request=request, template_name='registration/home_page.html')
+

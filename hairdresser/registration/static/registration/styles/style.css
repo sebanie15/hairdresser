@@ -1,8 +1,8 @@
 
-html{
-    font-size: 16px;
-    font-family: 'Jura', sans-serif;
-}
+/*html{*/
+/*    font-size: 16px;*/
+/*    font-family: 'Jura', sans-serif;*/
+/*}*/
 
 /*body{*/
 /*    background-image: url("{% static 'myToDoList/img/sidebar.png' %}");*/
@@ -37,15 +37,15 @@ width: 24.5%;
 background-color: #006aa3;
 }
 
-td{
+/*td{*/
 
-    /*background-color: #79aec8;*/
-    /*padding: 3px;*/
-}
+/*    !*background-color: #79aec8;*!*/
+/*    !*padding: 3px;*!*/
+/*}*/
 
-li{
-font-size: large;
-}
+/*li{*/
+/*font-size: large;*/
+/*}*/
 
 .nav-link:active,
 .nav-link:focus,
@@ -72,80 +72,71 @@ a:link, a:visited{
     color: black;
 }
 
-.sidebar-menu-img{
-    /* margin-top: 0.2rem; */
-    margin-left: 15px;
-    margin: auto 15px auto 15px;
-}
+/*.sidebar{*/
+/*    background-color: rgb(243, 243, 243);*/
+/*    width: 160px;*/
+/*    padding-top: 0.5rem;*/
+/*    height: 98vh;*/
+/*    !* flex: 1; *!*/
+/*}*/
 
-.sidebar{
-    background-color: rgb(243, 243, 243);
-    width: 160px;
-    padding-top: 0.5rem;
-    height: 98vh;
-    /* flex: 1; */
-}
+/*.topbar{*/
+/*    background-color: rgb(50, 112, 189);*/
+/*    width: 98vw;*/
+/*    height: 3rem;*/
+/*    padding: 0.2rem;*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*}*/
 
-.topbar{
-    background-color: rgb(50, 112, 189);
-    width: 98vw;
-    height: 3rem;
-    padding: 0.2rem;
-    display: flex;
-    flex-direction: row;
-}
+/*.topbar-title{*/
+/*    color: white;*/
+/*    font-weight: 900;*/
+/*    font-size: 1.5rem;*/
+/*    margin-left: 30px;*/
+/*    margin-top: auto;*/
+/*    margin-bottom: auto;*/
+/*    flex: 1;*/
+/*}*/
 
-.topbar-title{
-    color: white;
-    font-weight: 900;
-    font-size: 1.5rem;
-    margin-left: 30px;
-    margin-top: auto;
-    margin-bottom: auto;
-    flex: 1;
-}
+/*.topbar-search{*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    flex: 1;*/
+/*}*/
 
-.topbar-search{
-    width: 100%;
-    height: 100%;
-    flex: 1;
-}
+/*.topbar-search-input{*/
+/*    width: 100%;*/
+/*    background: lightblue;*/
+/*    margin-top: 3px;*/
+/*    !* margin-bottom: auto; *!*/
+/*    height: 1.7rem;*/
+/*    border: 1px solid rgb(68, 123, 206);*/
+/*    border-radius: 3px;*/
+/*}*/
 
-.topbar-search-input{
-    width: 100%;
-    background: lightblue;
-    margin-top: 3px;
-    /* margin-bottom: auto; */
-    height: 1.7rem;
-    border: 1px solid rgb(68, 123, 206);
-    border-radius: 3px;
-}
+/*.topbar-menu{*/
+/*    flex: 3;*/
+/*}*/
 
-.topbar-menu{
-    flex: 3;
-}
+/*.main-container{*/
+/*    !*text-align: auto;*!*/
+/*    !* border: 1px solid darkgray; *!*/
+/*    !* border-radius: 5px; *!*/
+/*    width: 100%;*/
+/*    margin: 0;*/
+/*    !* flex: 1; *!*/
+/*    padding: 1rem;*/
+/*}*/
 
-.main-container{
-    text-align: auto;
-    /* border: 1px solid darkgray; */
-    /* border-radius: 5px; */
-    width: 100%;
-    margin: 0;
-    /* flex: 1; */
-    padding: 1rem;
-}
-
-.center-verticaly{
-    margin: auto 0;
-}
+/*.center-verticaly{*/
+/*    margin: auto 0;*/
+/*}*/
 
 .calendar-time{
     width: 5rem;
-    height: 1rem;
+    height: 20px;
     margin: 2px;
-    /*border: rgb(243, 242, 242) 1px solid;*/
-    /*border-radius: 1px;*/
-    /*background-color: rgb(243, 242, 242);*/
     text-align: right;
 }
 
@@ -168,31 +159,22 @@ a:link, a:visited{
     width: 20%;
 }
 
-.calendar-column{
-    border: #79aec8 solid 1px;
-    /*width: 13rem;*/
-    /*flex: 6;*/
-    display: flex;
-    flex-direction: column;
-}
-
 .calendar-cell-free{
     text-align: center;
-    border: rgb(243, 242, 242) dotted 1px;
+    /*border: rgb(243, 242, 242) dotted 1px;*/
     margin: 2px;
-    height: 1rem;
+    color: white;
 }
 
 .calendar-cell-free:hover{
-    background-color: 689bca;
+    background-color: #70afe9;
 }
 .calendar-cell-busy{
     text-align: center;
-    border: rgb(243, 242, 242) solid 1px;
-    background-color: lightskyblue;
-    /*margin: 1px;*/
-    /*height: 60px;*/
-    /*flex: 6;*/
+    border: rgb(243, 242, 100) solid 1px;
+    border-radius: 5px;
+    background-color: rgb(243, 100, 100);
+    margin: 2px;
 }
 
 .calendar-cell-busy:hover{
@@ -200,5 +182,5 @@ a:link, a:visited{
 }
 
 .table-column{
-    /*border: lightgray 1px dotted;*/
+    border: lightgray 1px dotted;
 }

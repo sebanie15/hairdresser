@@ -160,8 +160,9 @@ a:link, a:visited{
 .calendar-day-header{
     border: #689bca solid 1px;
     border-radius: 2px;
-    background-color: #98b9df;
+    background-color: #689bca;
     color: white;
+    text-align: center;
     /*margin: 1px;*/
     flex: 6;
     width: 20%;
@@ -178,12 +179,12 @@ a:link, a:visited{
 .calendar-cell-free{
     text-align: center;
     border: rgb(243, 242, 242) dotted 1px;
-    /*margin: 1px;*/
+    margin: 2px;
     height: 1rem;
 }
 
 .calendar-cell-free:hover{
-    background-color: rgb(252, 252, 252);
+    background-color: 689bca;
 }
 .calendar-cell-busy{
     text-align: center;
@@ -195,7 +196,7 @@ a:link, a:visited{
 }
 
 .calendar-cell-busy:hover{
-    background-color: lightblue;
+    background-color: #70afe9;
 }
 
 .table-column{

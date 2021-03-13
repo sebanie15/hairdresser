@@ -27,5 +27,6 @@ urlpatterns = [
     path('salon/<int:salon_id>', views.salon_detail, name='salon_detail'),
     path('salon/', views.salon_list, name='salon_list'),
     path('visit/create/', views.create_visit, name='create_visit'),
+    path('calendar/', views.calendar_view, name='calendar'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # statics not for production!!!

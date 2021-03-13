@@ -19,71 +19,43 @@
         <div class="col-sm-3 col-xs-12 pe-0" id="menu">
             <div class="p-5 ps-md-4 ps-sm-2 text-start fs-3 text-light">HAIRDRESSER SCHEDULE</div> <hr>
             <ul class="navbar-nav d-flex flex-column mt-sm-5 w-100">
-            <li class="nav-item w-100">
-                <a href="#" class="nav-link text-light ps-4">Calendar</a>
-            </li>
-            <li class="nav-item w-100">
-                <a href="{% url 'salon_list' %}" class="nav-link text-light ps-4">Salons</a>
-            </li>
-            <li class="nav-item w-100">
-                <a href="#" class="nav-link text-light ps-4">New visit</a>
-            </li>
+                <li class="nav-item w-100">
+                    <a href="{% url 'calendar' %}" class="nav-link text-light ps-4"><i class="bi bi-calendar fs-5" style="display:inline-grid;"> </i>  Calendar</a>
+                </li>
+                <li class="nav-item w-100">
+                    <a href="{% url 'salon_list' %}" class="nav-link text-light ps-4">Salons</a>
+                </li>
+                <li class="nav-item w-100">
+                    <a href="#" class="nav-link text-light ps-4">New visit</a>
+                </li>
                 {% if perms.registration.staff_member_required %}
-            <li class="nav-item w-100">
-                <a href="#" class="nav-link text-light ps-4">Employees</a>
-            </li>
+                    <li class="nav-item w-100">
+                        <a href="#" class="nav-link text-light ps-4">Employees</a>
+                    </li>
                 {% endif %}
-        </ul>
-            <a href="#" class="d-none d-sm-block nav-link text-light text-center mt-5 logOut"><i class="bi bi-arrow-bar-left d-block"></i>Log out</a>
+                <li>
+                    <a href="{% url 'logout' %}" class="d-none d-sm-block nav-link text-light text-center  mt-5"><i class="bi bi-arrow-bar-left d-block"></i>Log out</a>
+                </li>
+            </ul>
+
         </div>
 
         <div class="col-sm-9 col-xs-12 vh-100 p-0">
             <div class="text-center bg-light">
-                Here will be search form
-                <p>You are logged as {{ user.first_name }} {{ user.last_name }}.</p>
+                Here will be search form ?
+                <p>You are logged as {{ user.first_name }} {{ user.last_name }}</p>
             </div>
-            {% block main-container %}
-            {% endblock main-container %}
 
+            {% block main_container %}
 
-<!--        <div class="topbar_menu">-->
-<!--            {% if user.is_authenticated %}-->
-<!--            <p style="color: lightgray">-->
-<!--                {% translate 'WELCOME' %} {{user.first_name}} {{ user.last_name}}-->
-<!--                <a href="{% url 'logout' %}">{% translate 'LOG OUT' %}</a>-->
-<!--            </p>-->
-<!--            {% endif %}-->
-<!--&gt;>>>>>> 01b5675... first look at the calendar view-->
+            {% endblock main_container %}
+
         </div>
-        <a href="#" class="d-sm-none nav-link bg-white text-dark text-center fs-6 vw-100"><hr class="vw-100"><i class="bi bi-arrow-bar-left d-block"></i>Log out</a>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js" integrity="sha384-5h4UG+6GOuV9qXh6HqOLwZMY4mnLPraeTrjT5v07o347pj6IkfuoASuGBhfDsp3d" crossorigin="anonymous"></script>
     </body>
-
-
-<!--    {% comment %} zawartość strony {% endcomment %}-->
-<!--    <section class="main-content">-->
-
-<!--        {% comment %} lewe menu {% endcomment %}-->
-<!--        <aside class="sidebar">-->
-<!--            {% block sidebar %}-->
-<!--                sidebar content-->
-<!--            {% endblock %}-->
-<!--        </aside>-->
-<!--        {% comment %} główny obszar na stronie gdzie będzie umieszczony kalendarz {% endcomment %}-->
-<!--        <main class="main-container">-->
-<!--            {% block main_container %}-->
-<!--                calendar content-->
-<!--            {% endblock %}-->
-<!--        </main>-->
-<!--    </section>-->
-
-<!--{% block body %}-->
-
-<!--{% endblock %}-->
-
-<!--</body>-->
 
 </html>

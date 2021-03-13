@@ -33,10 +33,11 @@ def login(request):
     return render(request=request, template_name="registration/login.html", context={'form': form})
 
 
-def logut_view(request):
+def logout_view(request):
     logout(request)
 
 
+@login_required
 def calendar_view(request):
 
     terms = [['free', 1]]*44

@@ -36,19 +36,8 @@
                 </tr>
                 <tr>
 <!--                    hours-->
-                    <td style="width: 5rem;">
-                            <div class="calendar-time">7:00</div>
-                            <div class="calendar-time">:15</div>
-                            <div class="calendar-time">:30</div>
-                            <div class="calendar-time">:45</div>
-                            <div class="calendar-time">8:00</div>
-                            <div class="calendar-time">:15</div>
-                            <div class="calendar-time">:30</div>
-                            <div class="calendar-time">:45</div>
-                            <div class="calendar-time">9:00</div>
-                            <div class="calendar-time">:15</div>
-                            <div class="calendar-time">:30</div>
-                            <div class="calendar-time">:45</div>
+                    <td  style="width: 5rem;">
+
                             <div class="calendar-time">10:00</div>
                             <div class="calendar-time">:15</div>
                             <div class="calendar-time">:30</div>
@@ -86,11 +75,15 @@
 
                     {% for week_day in timetable.values %}
                         <td class="table-column">
-                        {% for state, length in week_day %}
+                        {% for state, length, hour in week_day %}
                             {% if state == 'free' %}
-                                 <a href="{% url 'create_visit' %}"><div class="calendar-cell-free"></div></a>
+                                 <a href="{% url 'create_visit' %}">
+                                     <div class="calendar-cell-free" style="height: {{length}}px">{{hour}}</div>
+                                 </a>
                             {% elif state == 'busy' %}
-                                <a href=""></a>
+                                <a href="{% url 'create_visit' %}">
+                                    <div class="calendar-cell-busy" style="height: {{length}}px">{{hour}} {{length}}</div>
+                                </a>
                             {% endif %}
                         {% endfor %}
                         </td>

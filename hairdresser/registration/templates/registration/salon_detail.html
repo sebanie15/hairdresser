@@ -1,15 +1,39 @@
 {% extends 'registration/base.html' %}
 {% block main-container %}
+<div class="p-2">
+    <h4 class="text-center bg-light">Browse salons
+    </h4><hr>
+    <h2 class="text-center">{{ salon.name }}
+        {% if perms.registration.staff_member_required %}
+        <a href="#" class="text-dark" style="text-decoration: unset;"><i class="bi bi-pencil fs-5" style="display:inline-grid;"></i></a>
+        {% endif %}
+    </h2>
+    <div class="col-md-8 offset-md-2 pt-md-5">
+    <table class="table table-striped table-light table-hover table-sm">
+        <tbody>
+        <tr>
+            <th scope="col">Opening hours</th>
+            <td>{{ salon.open_from }} - {{ salon.open_to }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Address</th>
+            <td>{{ salon.address }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Phone number</th>
+            <td>{{ salon.phone_number }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Employees</th>
+            <td>{% for employee in employees %}
+            <a href="#" class="text-dark" style="text-decoration: unset;">{{ employee.first_name }} {{ employee.last_name }}</a>
+                {% endfor %}</td>
+        </tr>
+        </tbody>
+    </table>
+        </div>
 
-<h2>{{ salon.name }}</h2>
-Address: {{ salon.address }} <br>
-Phone number: {{ salon.phone_number }} <br>
-Opening hours: {{ salon.open_from }} - {{ salon.open_to }} <br>
-Employees:
-<ul>
-    {% for employee in employees %}
-    <li><a href="#">{{ employee.first_name }} {{ employee.last_name }}</a></li>
-    {% endfor %}
+
 </ul>
-
+</div>
 {% endblock main-container %}

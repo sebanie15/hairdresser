@@ -4,6 +4,7 @@ font-family: 'Khula', sans-serif;
 
 li{
 font-size: large;
+list-style-type: none;
 }
 
 .nav-link:active,
@@ -21,3 +22,4 @@ width: 24.5%;
 #menu{
 background-color: #006aa3;
 }
+

@@ -1,12 +1,15 @@
-from datetime import timedelta
+from datetime import timedelta, date
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 
+from .forms import SalonForm
 from .models import Salon, Visit, Service
 # Create your views here.
 
@@ -39,12 +42,54 @@ from .models import Salon, Visit, Service
 
 
 @login_required
-def calendar_view(request):
+def calendar_view(request, salon_id=None):
+    """
+
+    """
+    if not salon_id:
+        salon_id = 1
+
+    try:
+        salons = Salon.objects.get(id=salon_id)
+    except ObjectDoesNotExist:
+        raise Http404
+
+    if request.method == "POST":
+        form = SalonForm(request.POST)
+        print(f'request--: {request}')
+        if form.is_valid():
+            salon_pk = form.get_salon_pk()
+            print(f'salon pk: {salon_pk}')
+            return HttpResponseRedirect(f'/registration/calendar/{salon_pk}')
+    else:
+        salon_pk = salon_id
+
+    actual_date = date.today()
+    actual_week_day = actual_date.weekday()
+    date_from = actual_date - timedelta(days=actual_week_day)
+    date_to = date_from + timedelta(days=actual_week_day-1)
+    print(actual_date, actual_week_day, date_from, date_to)
+
+    # make data
+    visits = Visit.objects.filter(pk=salon_pk, start=date_from)
+    print('visits:', visits)
+
+    actual_date = date_from
+    while actual_date <= date_to:
+        visits = Visit.objects.filter(pk=salon_pk, start=actual_date)
+
+        actual_date = actual_date + timedelta(days=1)
+
+    if not visits:
+        monday_terms: []
 
     terms = [['free', 1]]*44
-    print(terms)
+
     ctx = {
+        'form': SalonForm(),
         'timeline': [],
+        'date_from': date_from,
+        'date_to': date_to,
         'timetable': {
             'monday': terms,
             'tuesday': terms,

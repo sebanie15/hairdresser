@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 
-from .models import Salon, Service
+from .models import Salon, Service, Visit
 
 
 # Register your models here.
@@ -28,4 +28,6 @@ admin.site.register(Salon, SalonAdmin)
 # admin.site.register(User)
 
 admin.site.register(Service, ServiceAdmin)
+admin.site.register(Visit)
+
 

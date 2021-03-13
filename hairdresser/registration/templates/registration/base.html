@@ -34,7 +34,7 @@
                     </li>
                 {% endif %}
                 <li>
-                    <a href="{% url 'logout' %}" class="d-none d-sm-block nav-link text-light text-center  mt-5"><i class="bi bi-arrow-bar-left d-block"></i>Log out</a>
+                    <a href="{% url 'logout' %}" class="d-none d-sm-block text-light text-center mt-5 logOut"><i class="bi bi-arrow-bar-left d-block"></i>Log out</a>
                 </li>
             </ul>
 
@@ -43,7 +43,7 @@
         <div class="col-sm-9 col-xs-12 vh-100 p-0">
             <div class="text-center bg-light">
                 Here will be search form ?
-                <p>You are logged as {{ user.first_name }} {{ user.last_name }}</p>
+                <p>You are logged as:<a href="{% url 'user_profile' user.username %}" class="d-none d-sm-block nav-link">{{ user.first_name }} {{ user.last_name }}</a> </p>
             </div>
 
             {% block main_container %}
@@ -51,7 +51,7 @@
             {% endblock main_container %}
 
         </div>
-
+    <a href="{% url 'logout' %}" class="d-sm-none nav-link bg-white text-dark text-center fs-6 vw-100"><hr class="vw-100"><i class="bi bi-arrow-bar-left d-block"></i>Log out</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

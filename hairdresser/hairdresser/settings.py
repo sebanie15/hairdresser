@@ -124,5 +124,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/registration/calendar/'
+LOGIN_REDIRECT_URL = '/registration/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'

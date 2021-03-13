@@ -22,11 +22,16 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.login, name='login'),
+    path('', views.home_page, name='home'),
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
     path('visit/<int:visit_id>', views.visit_detail, name='visit_detail'),
     path('salon/<int:salon_id>', views.salon_detail, name='salon_detail'),
     path('salon/', views.salon_list, name='salon_list'),
     path('visit/create/', views.create_visit, name='create_visit'),
     path('calendar/', views.calendar_view, name='calendar'),
+    path('user/<str:username>', views.user_profile, name='user_profile'),
+    path('passwdscc', views.password_success, name='password_success'),
+    path('password', views.change_password, name='change_password')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # statics not for production!!!

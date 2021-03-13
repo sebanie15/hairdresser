@@ -1,0 +1,34 @@
+{% extends 'registration/base.html' %}
+{% block main_container %}
+<h4 class="text-center bg-light">User profile ({{ user.username }})
+        {% if perms.registration.staff_member_required %}
+        <a href="#" class="text-dark" style="text-decoration: unset;"><i class="bi bi-pencil fs-5" style="display:inline-grid;"></i></a>
+        {% endif %}
+</h4><hr>
+<div class="col-md-8 offset-md-2 pt-md-5">
+    <table class="table table-striped table-light table-hover table-sm">
+        <tbody>
+        <tr>
+            <th scope="col">First name</th>
+            <td>{{ user.first_name }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Last name</th>
+            <td>{{ user.last_name }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Email</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Username</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        </tbody>
+    </table>
+        </div>
+<p class="text-center"><a href="{% url 'change_password' %}" class="text-info">Change password</a></p>
+{% if not perms.registration.staff_member_required %}
+<p class="text-center">To change your personal details, please contact with you administrator.</p>
+{% endif %}
+{% endblock main_container %}

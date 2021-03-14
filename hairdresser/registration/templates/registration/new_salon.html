@@ -1,15 +1,17 @@
 {% extends 'registration/base.html' %}
 
+
 {% block main_container %}
 <div class="p-2">
 {% if perms.registration.staff_member_required %}
     <h4 class="text-center bg-light">Add new salon</h4><hr>
-    <div class="col-md-8 offset-md-2">
-<form class="p-5" action="{% url 'new_salon' %}" method="POST" novalidate>
-    {{ form }}
-    <input type="submit" value="Save" name="Save">
+    <div class="col-xs-8 offset-xs-2 col-sm-6 offset-sm-3 text-center">
+<form style="text-align-last:justify;" action="{% url 'new_salon' %}" method="POST" novalidate>
+    {{ form.as_p }}
     {% csrf_token %}
+    <input type="submit" value="Save" name="Save" class="m-4">
 </form>
+
     </div>
     {% else %}
     <p class="text-center">You have no permissions to see this page.</p>

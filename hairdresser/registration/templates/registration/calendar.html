@@ -75,14 +75,18 @@
 
                     {% for week_day in timetable.values %}
                         <td class="table-column">
-                        {% for state, length, hour in week_day %}
+                        {% for state, length, hour, visit_id in week_day %}
                             {% if state == 'free' %}
                                  <a href="{% url 'create_visit' %}">
-                                     <div class="calendar-cell-free" style="height: {{length}}px">{{hour}}</div>
+                                     <div class="calendar-cell-free" style="height:{{length}}px">
+                                         {{hour}}
+                                     </div>
                                  </a>
                             {% elif state == 'busy' %}
-                                <a href="{% url 'create_visit' %}">
-                                    <div class="calendar-cell-busy" style="height: {{length}}px">{{hour}} {{length}}</div>
+                                <a href="{% url 'visit_detail' visit_id %}">
+                                    <div class="calendar-cell-busy" style="height:{{length}}px">
+                                        {{hour}}
+                                    </div>
                                 </a>
                             {% endif %}
                         {% endfor %}

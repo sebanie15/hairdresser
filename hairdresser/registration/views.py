@@ -11,8 +11,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
-from django.views.generic.edit import CreateView
-
+from django.views.generic.edit import CreateView, FormView
 
 from .forms import UserForm, SalonForm, NewSalonForm
 from .models import Salon, Visit, Service
@@ -23,6 +22,12 @@ class CreateVisitView(CreateView):
     fields = ['employee', 'salon', 'service', 'start', 'stop', 'client_name',
               'client_phone_number', 'finished', 'discount', 'price']
     success_url = reverse_lazy('calendar')
+
+
+class VisitView(FormView):
+    model = Visit
+    fields = ['__all__']
+    template_name = 'visit_detail.html'
 
 
 @login_required
@@ -109,19 +114,20 @@ def calendar_view(request, salon_id=None):
             if i < len(visits):
                 visit_start = visits[i].start
                 visit_stop = visits[i].stop
+                visit_id = visits[i].pk
 
                 if subtract_two_times(actual_hour, time(visit_start.hour, visit_start.minute)) > 0:
                     delta_time = 15
-                    result.append(['free', 20, actual_hour])
+                    result.append(['free', 20, actual_hour, 0])
                 else:
                     visit_length = subtract_two_times(time(visit_start.hour, visit_start.minute),
                                                       time(visit_stop.hour, visit_stop.minute))
-                    result.append(['busy', visit_length + 5 * visit_length // 12, actual_hour])
+                    result.append(['busy', visit_length + 5 * visit_length // 12, actual_hour, visit_id])
                     i += 1
                     delta_time = subtract_two_times(time(visit_start.hour, visit_start.minute),
                                                     time(visit_stop.hour, visit_stop.minute))
             else:
-                result.append(['free', 20, actual_hour])
+                result.append(['free', 20, actual_hour, 0])
                 delta_time = 15
 
             actual_hour = inc_time(old_time=actual_hour, delta_minute=delta_time)

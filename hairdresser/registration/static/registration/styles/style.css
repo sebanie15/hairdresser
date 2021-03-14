@@ -171,9 +171,9 @@ a:link, a:visited{
 }
 .calendar-cell-busy{
     text-align: center;
-    border: rgb(243, 242, 100) solid 1px;
+    border: rgb(100, 100, 100) solid 1px;
     border-radius: 5px;
-    background-color: rgb(243, 100, 100);
+    background-color: rgb(150, 150, 150);
     margin: 2px;
 }
 

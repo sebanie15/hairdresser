@@ -11,7 +11,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, Pass
 from django.contrib.auth import authenticate, update_session_auth_hash
 from django.urls import reverse
 
-from .forms import UserForm, SalonForm, NewSalonForm
+from .forms import UserForm, SalonForm, NewSalonForm, ServiceForm
 from .models import Salon, Visit, Service
 
 @login_required
@@ -215,3 +215,20 @@ def new_salon(request):
         form = NewSalonForm()
     return render(request=request, template_name='registration/new_salon.html', context={'form': form})
 
+
+@login_required
+def services(request):
+    all_services = Service.objects.all()
+    return render(request=request, template_name='registration/services.html', context={'all_services': all_services})
+
+
+@login_required
+def add_service(request):
+    if request.method == "POST":
+        form = ServiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('services')
+    else:
+        form = ServiceForm()
+    return render(request=request, template_name='registration/new_service.html', context={'form': form})

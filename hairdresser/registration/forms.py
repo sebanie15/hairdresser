@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Salon
+from .models import Salon, Service
 from django.utils.translation import gettext as _
 
 
@@ -34,3 +34,9 @@ class NewSalonForm(ModelForm):
     class Meta:
         model = Salon
         fields = '__all__'
+
+
+class ServiceForm(ModelForm):
+    class Meta:
+        model = Service
+        fields = ('name', 'service_length', 'price')

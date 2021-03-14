@@ -28,6 +28,9 @@
                 <li class="nav-item w-100">
                     <a href="#" class="nav-link text-light ps-4">New visit</a>
                 </li>
+                <li class="nav-item w-100">
+                        <a href="{% url 'services' %}" class="nav-link text-light ps-4">Services</a>
+                </li>
                 {% if perms.registration.staff_member_required %}
                     <li class="nav-item w-100">
                         <a href="{% url 'employees_list' %}" class="nav-link text-light ps-4">Employees</a>

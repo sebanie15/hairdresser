@@ -2,40 +2,15 @@ from datetime import timedelta
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
-from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
+from django.contrib.auth import authenticate, update_session_auth_hash
+from django.urls import reverse
 
+from .forms import UserForm, ChangeUserForm
 from .models import Salon, Visit, Service
-# Create your views here.
-
-
-# def login(request):
-#     if request.method == 'POST':
-#         form = AuthenticationForm(data=request.POST)
-#         if form.is_valid():
-#             # log in the user
-#             username = request.POST['username']
-#             password = request.POST['password']
-#             print(username, password)
-#             user = authenticate(request, username=username, password=password)
-#
-#             print(f'{request.user} zalogowany')
-#             if request.user.is_authenticated:
-#                 print(f'{request.user} się zalogował')
-#             return redirect('calendar')
-#
-#         else:
-#             print('nic z tego')
-#     else:
-#         form = AuthenticationForm()
-#
-#     return render(request=request, template_name="registration/login.html", context={'form': form})
-
-
-# def logout_view(request):
-#     logout(request)
 
 
 @login_required
@@ -97,9 +72,9 @@ def visit_detail(request, visit_id):
 
 
 @login_required
-def user_profile(request, username):
-    user = User.objects.get(username=username)
-    return render(request=request, template_name='registration/user_profile.html', context={'user': user})
+def user_profile(request, pk):
+    employee = User.objects.get(pk=pk)
+    return render(request=request, template_name='registration/user_profile.html', context={'picked_user': employee})
 
 
 @login_required
@@ -126,3 +101,25 @@ def password_success(request):
 @login_required
 def home_page(request):
     return render(request=request, template_name='registration/home_page.html')
+
+
+@login_required
+def employees_list(request):
+    active_employees = User.objects.filter(is_active=True)
+    former_employees = User.objects.filter(is_active=False)
+    return render(request=request, template_name='registration/employees_list.html',
+                  context={'active_employees': active_employees, 'former_employees': former_employees})
+
+
+@login_required
+def new_user(request):
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('employees_list')
+    else:
+        form = UserForm()
+    return render(request=request, template_name='registration/new_user.html', context={'form': form})
+
+

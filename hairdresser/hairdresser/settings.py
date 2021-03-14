@@ -126,3 +126,11 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/registration/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+
+from django.utils.translation import gettext_lazy as _
+
+
+LANGUAGES = [
+    ('en', _('English')),
+]

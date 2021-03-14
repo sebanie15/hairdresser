@@ -23,7 +23,6 @@ class ServiceAdmin(admin.ModelAdmin):
     fields = ('name', 'service_length', 'price')
 
 
-
 admin.site.register(Salon, SalonAdmin)
 # admin.site.register(User)
 

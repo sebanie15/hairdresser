@@ -17,10 +17,10 @@
     <body>
     <div class="row">
         <div class="col-sm-3 col-xs-12 pe-0" id="menu">
-            <div class="p-5 ps-md-4 ps-sm-2 text-start fs-3 text-light">HAIRDRESSER SCHEDULE</div> <hr>
+            <div class="p-5 ps-md-4 ps-sm-2 text-start fs-3 text-light"><a href="{% url 'home' %}" class="text-light" style="text-decoration: unset;">HAIRDRESSER SCHEDULE</a></div> <hr>
             <ul class="navbar-nav d-flex flex-column mt-sm-5 w-100">
                 <li class="nav-item w-100">
-                    <a href="{% url 'calendar' %}" class="nav-link text-light ps-4"><i class="bi bi-calendar fs-5" style="display:inline-grid;"> </i>  Calendar</a>
+                    <a href="{% url 'calendar' %}" class="nav-link text-light ps-4">Calendar</a>
                 </li>
                 <li class="nav-item w-100">
                     <a href="{% url 'salon_list' %}" class="nav-link text-light ps-4">Salons</a>
@@ -30,7 +30,7 @@
                 </li>
                 {% if perms.registration.staff_member_required %}
                     <li class="nav-item w-100">
-                        <a href="#" class="nav-link text-light ps-4">Employees</a>
+                        <a href="{% url 'employees_list' %}" class="nav-link text-light ps-4">Employees</a>
                     </li>
                 {% endif %}
                 <li>
@@ -43,7 +43,7 @@
         <div class="col-sm-9 col-xs-12 vh-100 p-0">
             <div class="text-center bg-light">
                 Here will be search form ?
-                <p>You are logged as:<a href="{% url 'user_profile' user.username %}" class="d-none d-sm-block nav-link">{{ user.first_name }} {{ user.last_name }}</a> </p>
+                <p>You are logged as:<a href="{% url 'user_profile' user.id %}" class="d-none d-sm-block nav-link">{{ user.first_name }} {{ user.last_name }}</a> </p>
             </div>
 
             {% block main_container %}

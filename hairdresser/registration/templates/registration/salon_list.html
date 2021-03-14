@@ -13,11 +13,15 @@
         </thead>
         <tbody>
         {% for salon in active_salons %}
+
         <tr>
+            <a href="">
             <th scope="row">{{ salon.id }}</th>
             <td><a href="{% url 'salon_detail' salon.id %}" class="text-dark" style="text-decoration: unset;">{{ salon.name }}</a></td>
             <td>{{ salon.address }}</td>
+                </a>
         </tr>
+
         {% endfor %}
         </tbody>
         <tfoot>

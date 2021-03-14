@@ -3,9 +3,9 @@
 {% block main_container %}
 <div class="p-2">
 {% if perms.registration.staff_member_required %}
-    <h4 class="text-center bg-light">Add new salon</h4><hr>
+    <h4 class="text-center bg-light">Add new service</h4><hr>
     <div class="col-md-8 offset-md-2">
-<form class="p-5" action="{% url 'new_salon' %}" method="POST" novalidate>
+<form class="p-5" action="{% url 'new_service' %}" method="POST" novalidate>
     {{ form }}
     <input type="submit" value="Save" name="Save">
     {% csrf_token %}

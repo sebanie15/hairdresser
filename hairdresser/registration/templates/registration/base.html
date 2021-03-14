@@ -26,7 +26,7 @@
                     <a href="{% url 'salon_list' %}" class="nav-link text-light ps-4">Salons</a>
                 </li>
                 <li class="nav-item w-100">
-                    <a href="#" class="nav-link text-light ps-4">New visit</a>
+                    <a href="{% url 'create_visit' %}" class="nav-link text-light ps-4">New visit</a>
                 </li>
                 {% if perms.registration.staff_member_required %}
                     <li class="nav-item w-100">

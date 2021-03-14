@@ -1,0 +1,14 @@
+{% extends 'registration/base.html' %}
+{% load i18n %}
+{% block main_container %}
+
+<!--    <h1>{% translate 'Calendar' %}</h1>-->
+    <form style="margin-left: 20px" action="" method="POST" novalidate>
+        <table>
+            <td>{{form}}</td>
+            <td><input type="submit" value={% translate 'Select' %}></td>
+        </table>
+        {% csrf_token %}
+    </form>
+
+{% endblock main_container %}

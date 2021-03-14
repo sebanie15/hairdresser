@@ -1,4 +1,6 @@
 from datetime import timedelta, datetime, date, time
+
+from django.urls import reverse_lazy
 from pytz import UTC as utc
 
 from django.contrib import messages
@@ -8,11 +10,20 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
-from django.contrib.auth import authenticate, update_session_auth_hash
-from django.urls import reverse
+from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
+from django.views.generic.edit import CreateView
+
 
 from .forms import UserForm, SalonForm, NewSalonForm
 from .models import Salon, Visit, Service
+
+
+class CreateVisitView(CreateView):
+    model = Visit
+    fields = ['employee', 'salon', 'service', 'start', 'stop', 'client_name',
+              'client_phone_number', 'finished', 'discount', 'price']
+    success_url = reverse_lazy('calendar')
+
 
 @login_required
 def calendar_view(request, salon_id=None):
@@ -41,14 +52,15 @@ def calendar_view(request, salon_id=None):
     actual_date = date.today()
     actual_week_day = actual_date.weekday()
     date_from = actual_date - timedelta(days=actual_week_day)
-    date_to = date_from + timedelta(days=actual_week_day-1)
+    date_to = date_from + timedelta(days=4)
 
     active_salon = Salon.objects.get(pk=salon_pk)
     time_open = active_salon.open_from
     time_close = active_salon.open_to
 
     # make data
-    visits = Visit.objects.filter(pk=salon_pk)
+    visits = Visit.objects.filter(salon=salon_pk)
+    print('=============================', visits)
 
     terms = [['free', 1]] * 44
 
@@ -81,8 +93,15 @@ def calendar_view(request, salon_id=None):
         week_day = pointed_date.weekday()
 
         result = []
-        visits = Visit.objects.filter(salon=salon_pk, start__gte=datetime.combine(pointed_date, time_open),
-                                      start__lte=datetime.combine(pointed_date, time_close)).order_by('start')
+        visits = Visit.objects.filter(
+            salon=salon_pk,
+            start__gte=datetime.combine(pointed_date, time_open),
+            start__lte=datetime.combine(pointed_date, time_close)).order_by('start')
+        print('-------------------------------------')
+        print(f'visits from while: {visits}')
+        print(f'salon_pk: {salon_pk}')
+        print(f'start__gte: {datetime.combine(pointed_date, time_open)}')
+        print(f'start_lte: {datetime.combine(pointed_date, time_close)}')
 
         actual_hour = time_open
         i = 0
@@ -107,22 +126,13 @@ def calendar_view(request, salon_id=None):
 
             actual_hour = inc_time(old_time=actual_hour, delta_minute=delta_time)
 
-        ctx['timetable'].update({WEEK_DAYS[week_day]:result})
+        ctx['timetable'].update({WEEK_DAYS[week_day]: result})
         pointed_date = pointed_date + timedelta(days=1)
 
     return render(
         request=request,
         template_name='registration/calendar.html',
         context=ctx,
-    )
-
-
-def create_visit(request):
-
-    return render(
-        request=request,
-        template_name='registration/create_visit.html',
-        context={},
     )
 
 
@@ -151,6 +161,7 @@ def visit_detail(request, visit_id):
     final_price = service.price + visit.discount
     return render(request=request, template_name='registration/visit_detail.html',
                   context={'employee': employee, 'visit': visit, 'end_time': end_time, 'final_price': final_price})
+
 
 @login_required
 def user_profile(request, pk):

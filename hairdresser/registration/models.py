@@ -53,7 +53,7 @@ class Visit(models.Model):
     client_name = models.CharField(max_length=50, verbose_name=_('Client name'))
     client_phone_number = models.CharField(max_length=12, verbose_name=_("Client's phone number"))
     finished = models.BooleanField(default=False, verbose_name=_('Is finished'))
-    discount = models.DecimalField(max_digits=5, decimal_places=2, blank=True, verbose_name=_('Discount'))
+    discount = models.DecimalField(max_digits=5, decimal_places=2, blank=True, verbose_name=_('Discount'), default=0)
     price = models.DecimalField(max_digits=5, decimal_places=2, verbose_name=_('Price'))
 
     class Meta:

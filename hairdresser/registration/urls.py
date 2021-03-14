@@ -36,5 +36,6 @@ urlpatterns = [
     path('passwdscc/', views.password_success, name='password_success'),
     path('password/', views.change_password, name='change_password'),
     path('calendar/<int:salon_id>', views.calendar_view, name='calendar'),
+    path('newsalon/', views.new_salon, name='new_salon')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # statics not for production!!!

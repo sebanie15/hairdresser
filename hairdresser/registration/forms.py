@@ -28,3 +28,9 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password', 'first_name', 'last_name', 'is_active')
+
+
+class NewSalonForm(ModelForm):
+    class Meta:
+        model = Salon
+        fields = '__all__'

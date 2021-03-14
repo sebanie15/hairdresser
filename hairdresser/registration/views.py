@@ -11,7 +11,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, Pass
 from django.contrib.auth import authenticate, update_session_auth_hash
 from django.urls import reverse
 
-from .forms import UserForm, SalonForm
+from .forms import UserForm, SalonForm, NewSalonForm
 from .models import Salon, Visit, Service
 
 @login_required
@@ -202,3 +202,16 @@ def new_user(request):
     else:
         form = UserForm()
     return render(request=request, template_name='registration/new_user.html', context={'form': form})
+
+
+@login_required
+def new_salon(request):
+    if request.method == "POST":
+        form = NewSalonForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('salon_list')
+    else:
+        form = NewSalonForm()
+    return render(request=request, template_name='registration/new_salon.html', context={'form': form})
+
